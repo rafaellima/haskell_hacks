@@ -15,3 +15,21 @@ boomBangs xs = [ if x < 10 then "BOOM!" else "BANG!" | x <- xs, odd x]
 
 -- We can include several predicates. If we wanted all numbers from 10 to 20 that are not 13, 15 or 19, we'd do:
 [ x | x <- [10..20], x /= 13, x /= 15, x /= 19] -- [10,11,12,14,16,17,18,20] 
+
+-- If we have two lists, [2,5,10] and [8,10,11] and we want to get the products of all the possible combinations between numbers in those lists, here's what we'd do.
+[ x*y | x <- [2,5,10], y <- [8,10,11]]  -- [16,20,22,40,50,55,80,100,110]
+
+-- As expected, the length of the new list is 9. What if we wanted all possible products that are more than 50?
+[ x*y | x <- [2,5,10], y <- [8,10,11], x*y > 50]  --[55,80,100,110]
+
+-- How about a list comprehension that combines a list of adjectives and a list of nouns … for epic hilarity.
+let nouns = ["hobo","frog","pope"]
+let adjectives = ["lazy","grouchy","scheming"]
+[adjective ++ " " ++ noun | adjective <- adjectives, noun <- nouns] --["lazy hobo","lazy frog","lazy pope","grouchy hobo","grouchy frog",  "grouchy pope","scheming hobo","scheming frog","scheming pope"]
+
+--I know! Let's write our own version of length! We'll call it length'.
+length' xs = sum [1 | _ <- xs] 
+-- _ means that we don't care what we'll draw from the list anyway so instead of writing a variable name that we'll never use, we just write _.
+
+-- Here's a function that takes a string and removes everything except uppercase letters from it.
+removeNonUppercase st = [ c | c <- st, c `elem` ['A'..'Z']]
